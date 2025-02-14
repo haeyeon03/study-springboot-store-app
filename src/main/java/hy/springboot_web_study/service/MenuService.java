@@ -9,29 +9,50 @@ import java.util.List;
 @Service
 public class MenuService {
     List<Menu> menuList = new ArrayList<>();
+
+    /**
+     * 전체 메뉴를 조회힙니다.
+     *
+     * @return List 전체 메뉴 리스트
+     */
+    public List<Menu> getMenuList() {
+        return menuList;
+    }
+
     /**
      * 새 메뉴를 추가합니다.
      *
      * @param menuName 메뉴 이름
-     * @param price 가격
+     * @param price    가격
+     * @return int 리스트 추가 성공 시 1, 실패 시 0 을 반환합니다.
      */
-    public void addMenu(String menuName, int price) {
+    public int addMenu(String menuName, int price) {
         Menu menu = new Menu();
         // 기존 메뉴 리스트에 중복된 메뉴 이름이 있는지 확인
         if (!isDuplicatedMenuName(menuName)) {
             menu.setMenuName(menuName);
             menu.setPrice(price);
             menuList.add(menu);
+            return 1;
         }
+        return 0;
     }
 
     /**
-     * 전체 메뉴를 조회힙니다.
-     * 
-     * @return List 전체 메뉴 리스트
+     * 기존 메뉴를 리스트에서 찾아 삭제 합니다.
+     *
+     * @param menuName 삭제 할 메뉴 이름
+     * @return int 리스트 삭제 성공 시 1, 실패 시 0 을 반환합니다.
      */
-    public List<Menu> getMenuList() {
-        return menuList;
+    public int removeMenu(String menuName) {
+        for (int i = 0; i < menuList.size(); i++) {
+            Menu menu = menuList.get(i);
+            if (menuName.equals(menu.getMenuName())) {
+                menuList.remove(i);
+                return 1;
+            }
+        }
+        return 0;
     }
 
     /**
