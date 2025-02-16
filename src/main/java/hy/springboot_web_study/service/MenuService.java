@@ -39,9 +39,28 @@ public class MenuService {
     }
 
     /**
+     * 메뉴 이름을 받아 기존 가격을 수정 합니다.
+     *
+     * @param menuName 수정할 메뉴 이름
+     * @param price    새 가격
+     * @return int 메뉴 가격 수정 성공 시 1, 실패 시 0 을 반환합니다.
+     */
+    public int modifyPrice(String menuName, int price) {
+        for (int i = 0; i < menuList.size(); i++) {
+            Menu menu = menuList.get(i);
+            // 4-3-1. 일치하면 메뉴 이름의 수정하고 싶은 가격 입력 받기
+            if (menu.getMenuName().equals(menuName)) {
+                menu.setPrice(price);
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+    /**
      * 기존 메뉴를 리스트에서 찾아 삭제 합니다.
      *
-     * @param menuName 삭제 할 메뉴 이름
+     * @param menuName 삭제할 메뉴 이름
      * @return int 리스트 삭제 성공 시 1, 실패 시 0 을 반환합니다.
      */
     public int removeMenu(String menuName) {

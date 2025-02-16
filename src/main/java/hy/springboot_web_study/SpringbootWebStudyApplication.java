@@ -4,9 +4,7 @@ import hy.springboot_web_study.model.Menu;
 import hy.springboot_web_study.service.MenuService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -32,8 +30,7 @@ public class SpringbootWebStudyApplication {
             // 사용자 입력값(번호)에 따른 분기 처리
             switch (selectedNumber) {
                 case "1": // 1. 전체 메뉴 조회
-                    List<Menu> menuList = menuService.getMenuList();
-                    printMenu(menuList);
+                    printMenu(menuService.getMenuList());
                     break;
                 case "2":
                     break;
@@ -54,13 +51,33 @@ public class SpringbootWebStudyApplication {
                     }
                     break;
                 case "4": // 4. 기존 메뉴 이름 및 가격 변경
+                    while (true) {
+                        // 4-1. 메뉴 리스트 표시
+                        printMenu(menuService.getMenuList());
+                        // 4-2. 수정할 메뉴 이름 입력값 받기
+                        System.out.println("=== Type the menu name to modify a price. ===");
+                        Scanner in4 = new Scanner(System.in);
+                        String menuName = in4.next();
+                        // 4-3. 해당 메뉴가 메뉴리스트에 존재하는지 확인
+                        if (menuService.isDuplicatedMenuName(menuName)) {
+                            System.out.println("=== Type new price. ===");
+                            Scanner in5 = new Scanner(System.in);
+                            int newPrice = in5.nextInt();
+                            // 4-3. 메뉴리스트에서 해당 메뉴를 찾아 가격 수정
+                            if (menuService.modifyPrice(menuName, newPrice) == 1) {
+                                break;
+                            }
+                        } else {
+                            System.out.println("=== The menu doesn't exist. Please type a valid menu. ===");
+                        }
+                    }
                     break;
                 case "5": // 5. 기존 메뉴 삭제
                     while (true) {
                         printMenu(menuService.getMenuList());
                         System.out.println("Type a menu to remove.");
-                        Scanner in4 = new Scanner(System.in);
-                        String menuName = in4.next();
+                        Scanner in6 = new Scanner(System.in);
+                        String menuName = in6.next();
                         if (menuService.removeMenu(menuName) == 1) {
                             System.out.println("=== The Menu's been removed successfully. ===");
                             break; // while 문 break
@@ -75,6 +92,7 @@ public class SpringbootWebStudyApplication {
             }
         }
     }
+
 
     /**
      * 메뉴 리스트를 콘솔에 표시합니다.
