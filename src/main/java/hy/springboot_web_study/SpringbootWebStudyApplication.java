@@ -2,6 +2,7 @@ package hy.springboot_web_study;
 
 import hy.springboot_web_study.model.Menu;
 import hy.springboot_web_study.service.MenuService;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,11 +10,20 @@ import java.util.List;
 import java.util.Scanner;
 
 @SpringBootApplication
-public class SpringbootWebStudyApplication {
+public class SpringbootWebStudyApplication implements CommandLineRunner {
+    private final MenuService menuService;
+
+    public SpringbootWebStudyApplication(MenuService menuService) {
+        this.menuService = menuService;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(SpringbootWebStudyApplication.class, args);
-        MenuService menuService = new MenuService();
+    }
+
+
+    @Override
+    public void run(String... args) throws Exception {
         System.out.println("=== Welcome to HY's Restaurant Management System! ===");
         while (true) {
             System.out.println("Please type the number to get information.");
@@ -93,13 +103,12 @@ public class SpringbootWebStudyApplication {
         }
     }
 
-
     /**
      * 메뉴 리스트를 콘솔에 표시합니다.
      *
      * @param menuList 메뉴 리스트
      */
-    static void printMenu(List<Menu> menuList) {
+    private void printMenu(List<Menu> menuList) {
         System.out.println("----------MENU----------");
         for (int i = 0; i < menuList.size(); i++) {
             Menu menu = menuList.get(i);

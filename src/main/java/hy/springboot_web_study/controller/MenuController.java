@@ -11,11 +11,11 @@ import java.util.List;
 
 @RestController
 public class MenuController {
-    @GetMapping("/api/menus")
-    public ResponseEntity<?> getMenus(int a) {
-        MenuService menuService = new MenuService();
-        List<Menu> menuList = menuService.getMenuList();
-        return new ResponseEntity<>(menuList, HttpStatus.OK);
-    }
+//    @GetMapping("/api/menus")
+//    public ResponseEntity<?> getMenus(int a) {
+//        MenuService menuService = new MenuService();
+//        List<Menu> menuList = menuService.getMenuList();
+//        return new ResponseEntity<>(menuList, HttpStatus.OK);
+//    }
 
 }

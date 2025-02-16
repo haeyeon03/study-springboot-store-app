@@ -1,6 +1,7 @@
 package hy.springboot_web_study.service;
 
 import hy.springboot_web_study.model.Menu;
+import hy.springboot_web_study.repository.MenuRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,6 +9,13 @@ import java.util.List;
 
 @Service
 public class MenuService {
+
+    private final MenuRepository menuRepository;
+
+    public MenuService(MenuRepository menuRepository) {
+        this.menuRepository = menuRepository;
+    }
+
     List<Menu> menuList = new ArrayList<>();
 
     /**
@@ -16,7 +24,7 @@ public class MenuService {
      * @return List 전체 메뉴 리스트
      */
     public List<Menu> getMenuList() {
-        return menuList;
+        return menuRepository.findAll();
     }
 
     /**
@@ -27,12 +35,9 @@ public class MenuService {
      * @return int 리스트 추가 성공 시 1, 실패 시 0 을 반환합니다.
      */
     public int addMenu(String menuName, int price) {
-        Menu menu = new Menu();
         // 기존 메뉴 리스트에 중복된 메뉴 이름이 있는지 확인
         if (!isDuplicatedMenuName(menuName)) {
-            menu.setMenuName(menuName);
-            menu.setPrice(price);
-            menuList.add(menu);
+            menuRepository.save(new Menu(menuName, price));
             return 1;
         }
         return 0;
@@ -81,11 +86,11 @@ public class MenuService {
      * @return boolean 중복된 메뉴 이름 있다면 true, 없다면 false 를 반환합니다.
      */
     public boolean isDuplicatedMenuName(String menuName) {
-        for (int i = 0; i < menuList.size(); i++) {
-            if (menuName.equals(menuList.get(i).getMenuName())) {
-                return true;
-            }
+        Menu menu = menuRepository.findOne(menuName);
+        if (menu != null) {
+            return true;
         }
         return false;
+
     }
 }
