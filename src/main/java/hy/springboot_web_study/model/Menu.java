@@ -9,6 +9,11 @@ public class Menu {
     }
 
     // args 가 존재하는 생성자
+    public Menu(String menuName) {
+        this.menuName = menuName;
+    }
+
+    // args 가 존재하는 생성자
     public Menu(String menuName, int price) {
         this.menuName = menuName;
         this.price = price;

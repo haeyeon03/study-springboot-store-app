@@ -36,14 +36,14 @@ public class MenuRepository {
      *
      * @return List
      */
-    public Menu findOne(String menuName) {
+    public Menu findOne(Menu menu) {
         String sql = "SELECT * FROM MENU WHERE MENU_NAME = ?";
         RowMapper<Menu> rowMapper = (rs, rowNum) -> new Menu(
                 rs.getString("MENU_NAME"),
                 rs.getInt("PRICE")
         );
         try {
-            return jdbcTemplate.queryForObject(sql, rowMapper, menuName);
+            return jdbcTemplate.queryForObject(sql, rowMapper, menu.getMenuName());
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -52,11 +52,12 @@ public class MenuRepository {
     /**
      * 새 메뉴를 추가합니다.
      *
-     * @param menu 메뉴 이름, 가격
+     * @param menu 메뉴
      */
     public int save(Menu menu) {
+        String sql = "INSERT INTO MENU (MENU_NAME, PRICE) VALUES(?, ?)";
         try {
-            return jdbcTemplate.update("INSERT INTO MENU (MENU_NAME, PRICE) VALUES(?, ?)", menu.getMenuName(), menu.getPrice());
+            return jdbcTemplate.update(sql, menu.getMenuName(), menu.getPrice());
         } catch (DataIntegrityViolationException e) {
             return 0;
         }
@@ -65,7 +66,7 @@ public class MenuRepository {
     /**
      * 메뉴의 가격을 수정 합니다.
      *
-     * @param menu 메뉴 이름, 가격
+     * @param menu 메뉴
      */
     public void update(Menu menu) {
         String sql = "UPDATE MENU SET PRICE= ? WHERE MENU_NAME= ?;";
@@ -75,10 +76,11 @@ public class MenuRepository {
     /**
      * 메뉴를 삭제 합니다.
      *
-     * @param menuName 메뉴 이름
+     * @param menu 메뉴
      */
-    public int delete(String menuName) {
-        return jdbcTemplate.update("DELETE FROM MENU WHERE MENU_NAME = ?", menuName);
+    public int delete(Menu menu) {
+        String sql = "DELETE FROM MENU WHERE MENU_NAME = ? AND PRICE = ?";
+        return jdbcTemplate.update(sql, menu.getMenuName(), menu.getPrice());
     }
 
 }
