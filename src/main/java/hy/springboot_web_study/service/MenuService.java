@@ -36,11 +36,7 @@ public class MenuService {
      */
     public int addMenu(String menuName, int price) {
         // 기존 메뉴 리스트에 중복된 메뉴 이름이 있는지 확인
-        if (!isDuplicatedMenuName(menuName)) {
-            menuRepository.save(new Menu(menuName, price));
-            return 1;
-        }
-        return 0;
+        return menuRepository.save(new Menu(menuName, price));
     }
 
     /**
@@ -51,13 +47,9 @@ public class MenuService {
      * @return int 메뉴 가격 수정 성공 시 1, 실패 시 0 을 반환합니다.
      */
     public int modifyPrice(String menuName, int price) {
-        for (int i = 0; i < menuList.size(); i++) {
-            Menu menu = menuList.get(i);
-            // 4-3-1. 일치하면 메뉴 이름의 수정하고 싶은 가격 입력 받기
-            if (menu.getMenuName().equals(menuName)) {
-                menu.setPrice(price);
-                return 1;
-            }
+        if (isDuplicatedMenuName(menuName)) {
+            menuRepository.update(new Menu(menuName,price));
+            return 1;
         }
         return 0;
     }
@@ -69,14 +61,7 @@ public class MenuService {
      * @return int 리스트 삭제 성공 시 1, 실패 시 0 을 반환합니다.
      */
     public int removeMenu(String menuName) {
-        for (int i = 0; i < menuList.size(); i++) {
-            Menu menu = menuList.get(i);
-            if (menuName.equals(menu.getMenuName())) {
-                menuList.remove(i);
-                return 1;
-            }
-        }
-        return 0;
+        return menuRepository.delete(menuName);
     }
 
     /**

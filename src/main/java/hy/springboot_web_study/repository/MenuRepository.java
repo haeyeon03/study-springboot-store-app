@@ -1,6 +1,7 @@
 package hy.springboot_web_study.repository;
 
 import hy.springboot_web_study.model.Menu;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -53,9 +54,31 @@ public class MenuRepository {
      *
      * @param menu 메뉴 이름, 가격
      */
-    public void save(Menu menu)  {
-        String sql = "INSERT INTO MENU (MENU_NAME, PRICE) VALUES(?, ?);";
+    public int save(Menu menu) {
+        try {
+            return jdbcTemplate.update("INSERT INTO MENU (MENU_NAME, PRICE) VALUES(?, ?)", menu.getMenuName(), menu.getPrice());
+        } catch (DataIntegrityViolationException e) {
+            return 0;
+        }
+    }
+
+    /**
+     * 메뉴의 가격을 수정 합니다.
+     *
+     * @param menu 메뉴 이름, 가격
+     */
+    public void update(Menu menu) {
+        String sql = "UPDATE MENU SET PRICE= ? WHERE MENU_NAME= ?;";
         jdbcTemplate.update(sql, menu.getMenuName(), menu.getPrice());
+    }
+
+    /**
+     * 메뉴를 삭제 합니다.
+     *
+     * @param menuName 메뉴 이름
+     */
+    public int delete(String menuName) {
+        return jdbcTemplate.update("DELETE FROM MENU WHERE MENU_NAME = ?", menuName);
     }
 
 }
