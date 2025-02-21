@@ -32,6 +32,20 @@ public class MenuRepository {
     }
 
     /**
+     * 키워드에 해당하는 메뉴를 조회합니다.
+     *
+     * @return List
+     */
+    public List<Menu> findAll(Menu menu) {
+        String sql = "SELECT * FROM MENU WHERE MENU_NAME LIKE ?";
+        RowMapper<Menu> rowMapper = (rs, rowNum) -> new Menu(
+                rs.getString("MENU_NAME"),
+                rs.getInt("PRICE")
+        );
+        return jdbcTemplate.query(sql, rowMapper, "%" + menu.getMenuName() + "%");
+    }
+
+    /**
      * 메뉴 이름으로 단 건 조회합니다.
      *
      * @return List

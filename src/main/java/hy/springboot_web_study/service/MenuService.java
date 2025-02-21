@@ -36,6 +36,16 @@ public class MenuService {
     }
 
     /**
+     * 키워드를 포함한 메뉴 정보를 조회합니다.
+     *
+     * @param keyword 메뉴 이름
+     * @return List 키워드를 포함한 메뉴 리스트
+     */
+    public List<Menu> findAllByKeyword(String keyword) {
+        return menuRepository.findAll(new Menu(keyword));
+    }
+
+    /**
      * 메뉴 이름을 받아 기존 가격을 수정 합니다.
      *
      * @param menuName 수정할 메뉴 이름

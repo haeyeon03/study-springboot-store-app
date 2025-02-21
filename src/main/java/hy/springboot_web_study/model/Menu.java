@@ -34,4 +34,5 @@ public class Menu {
     public void setPrice(int price) {
         this.price = price;
     }
+
 }

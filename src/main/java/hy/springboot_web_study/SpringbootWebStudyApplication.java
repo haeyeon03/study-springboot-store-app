@@ -21,7 +21,7 @@ public class SpringbootWebStudyApplication implements CommandLineRunner {
         SpringApplication.run(SpringbootWebStudyApplication.class, args);
     }
 
-    // 조건조회 기능 추가 (service, repo) SQL LIKE git에 일단 커밋
+    // 조건조회 기능 추가 (service, repo) SQL LIKE
     // ------------------------------
     // api 화 (controller)
     // staff domain 추가 (db, table, domain, service, repo)
@@ -52,10 +52,11 @@ public class SpringbootWebStudyApplication implements CommandLineRunner {
                     printMenu(menuService.getMenuList());
                     break;
                 case "2": // 2. 이름 조건 조회
-                    // 2-1. 검색 대상을 입력한다 (이름)
-                    // 2-2.
-                    // 2-3. 메뉴가 있으면 해당 메뉴의 가격을 알려준다.
-                    // 2-4. 메뉴가 없으면 메뉴이름을 다시 입력 받는다.
+                    printMenu(menuService.getMenuList());
+                    System.out.println("Type the keyword of menu name.");
+                    Scanner in6 = new Scanner(System.in);
+                    String keyword = in6.next();
+                    printMenu(menuService.findAllByKeyword(keyword));
                     break;
                 case "3": // 3. 새 메뉴 추가
                     while (true) {
@@ -100,8 +101,8 @@ public class SpringbootWebStudyApplication implements CommandLineRunner {
                     while (true) {
                         printMenu(menuService.getMenuList());
                         System.out.println("Type a menu to remove.");
-                        Scanner in6 = new Scanner(System.in);
-                        String menuName = in6.next();
+                        Scanner in7 = new Scanner(System.in);
+                        String menuName = in7.next();
                         if (menuService.removeMenu(menuName) == 1) {
                             System.out.println("=== The Menu's been modified successfully. ===");
                             break; // while 문 break
