@@ -68,9 +68,13 @@ public class MenuRepository {
      *
      * @param menu 메뉴
      */
-    public void update(Menu menu) {
-        String sql = "UPDATE MENU SET PRICE= ? WHERE MENU_NAME= ?;";
-        jdbcTemplate.update(sql, menu.getMenuName(), menu.getPrice());
+    public int update(Menu menu) {
+        String sql = "UPDATE MENU SET PRICE = ? WHERE MENU_NAME = ?";
+        try {
+            return jdbcTemplate.update(sql, menu.getPrice(), menu.getMenuName());
+        } catch (DataIntegrityViolationException e) {
+            return 0;
+        }
     }
 
     /**
@@ -79,8 +83,8 @@ public class MenuRepository {
      * @param menu 메뉴
      */
     public int delete(Menu menu) {
-        String sql = "DELETE FROM MENU WHERE MENU_NAME = ? AND PRICE = ?";
-        return jdbcTemplate.update(sql, menu.getMenuName(), menu.getPrice());
+        String sql = "DELETE FROM MENU WHERE MENU_NAME = ?";
+        return jdbcTemplate.update(sql, menu.getMenuName());
     }
 
 }

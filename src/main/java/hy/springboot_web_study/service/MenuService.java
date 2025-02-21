@@ -43,11 +43,7 @@ public class MenuService {
      * @return int 메뉴 가격 수정 성공 시 1, 실패 시 0 을 반환합니다.
      */
     public int modifyPrice(String menuName, int price) {
-        if (isDuplicatedMenuName(menuName)) {
-            menuRepository.update(new Menu(menuName, price));
-            return 1;
-        }
-        return 0;
+        return menuRepository.update(new Menu(menuName, price));
     }
 
     /**
