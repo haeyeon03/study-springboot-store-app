@@ -16,9 +16,9 @@ public class MenuService {
     }
 
     /**
-     * 전체 메뉴를 조회힙니다.
+     * 전체 메뉴를 조회합니다.
      *
-     * @return List 전체 메뉴 리스트
+     * @return List 전체 메뉴 리스트를 보여줍니다.
      */
     public List<Menu> getMenuList() {
         return menuRepository.findAll();
@@ -39,9 +39,9 @@ public class MenuService {
      * 키워드를 포함한 메뉴 정보를 조회합니다.
      *
      * @param keyword 메뉴 이름
-     * @return List 키워드를 포함한 메뉴 리스트
+     * @return List 키워드를 포함한 메뉴 리스트를 보여줍니다.
      */
-    public List<Menu> findAllByKeyword(String keyword) {
+    public List<Menu> getMenuListByKeyword(String keyword) {
         return menuRepository.findAll(new Menu(keyword));
     }
 

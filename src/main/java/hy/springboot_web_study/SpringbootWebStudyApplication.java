@@ -21,8 +21,6 @@ public class SpringbootWebStudyApplication implements CommandLineRunner {
         SpringApplication.run(SpringbootWebStudyApplication.class, args);
     }
 
-    // 조건조회 기능 추가 (service, repo) SQL LIKE
-    // ------------------------------
     // api 화 (controller)
     // staff domain 추가 (db, table, domain, service, repo)
     // 화면 구현 (thymeleaf)
