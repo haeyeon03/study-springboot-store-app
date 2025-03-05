@@ -54,7 +54,7 @@ public class SpringbootWebStudyApplication implements CommandLineRunner {
                     System.out.println("Type the keyword of menu name.");
                     Scanner in6 = new Scanner(System.in);
                     String keyword = in6.next();
-                    printMenu(menuService.findAllByKeyword(keyword));
+                    printMenu(menuService.getMenuListByKeyword(keyword));
                     break;
                 case "3": // 3. 새 메뉴 추가
                     while (true) {

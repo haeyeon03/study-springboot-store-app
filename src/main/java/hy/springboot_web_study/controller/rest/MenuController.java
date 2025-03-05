@@ -1,4 +1,4 @@
-package hy.springboot_web_study.controller;
+package hy.springboot_web_study.controller.rest;
 
 import hy.springboot_web_study.model.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,7 @@ public class MenuController {
      *
      * @return List 전체 메뉴 리스트를 보여줍니다.
      */
-
     @GetMapping("/api/menus")
-
     public ResponseEntity<?> getMenuList() {
         List<Menu> menuList = menuService.getMenuList();
         return new ResponseEntity<>(menuList, HttpStatus.OK);
